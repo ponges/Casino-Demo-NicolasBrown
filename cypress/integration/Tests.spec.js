@@ -89,7 +89,7 @@ describe('example to-do app', () => {
     .and('include', 'https://sollogin.com/social/login/telegram/')
   })
 
-  it.only('Verify Form Error Validations', ()  => {
+  it('Verify Form Error Validations', ()  => {
     // We will just validate that link is correct
     Header.SignUp()
     cy.get(rElements.rRegisterBtn).click()
