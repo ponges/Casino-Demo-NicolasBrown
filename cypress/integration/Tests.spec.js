@@ -123,7 +123,7 @@ describe('example to-do app', () => {
 
   })
   
-  it.only('Login then logout', () => {
+  it('Login then logout', () => {
     // We will just validate that link is correct
     Header.SignUp()
     cy.get(hElements.hSignInModalSignInBtn).click({force: true})
