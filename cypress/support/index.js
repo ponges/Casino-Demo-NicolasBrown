@@ -19,3 +19,5 @@ import './commands'
 Cypress.config('UniqueNumber', `${Math.floor(Math.random() * 9999999)}`)
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+Cypress.config('ValidUser', `ponges123`)
+Cypress.config('ValidUserPass', `Nico@6571`)

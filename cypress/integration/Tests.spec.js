@@ -6,6 +6,12 @@ import wMElements from '../Components/Elements/WelcomeModal/elements'
 import hElements from '../Components/Elements/Header/elements'
 // Import elements from Registration
 import rElements from '../Components/Elements/Registration/elements'
+// Import elements from Login
+import lElements from '../Components/Elements/Login/elements'
+// Import elements from Mobile Bar
+import mBElements from '../Components/Elements/MobileBar/elements'
+// Import Elements from Profile Page
+import pElements from '../components/Elements/Profile/elements'
 // Import Functions related to registration section
 import Registration from '../Components/Handlers/Registration'
 // Import Functions related to header section
@@ -92,18 +98,45 @@ describe('example to-do app', () => {
   it('Verify Form Error Validations', ()  => {
     // We will just validate that link is correct
     Header.SignUp()
+    // Clicking Regisster with empty form to check validations
     cy.get(rElements.rRegisterBtn).click()
+    // Checking Expected error validations to appear
+    cy.get(rElements.rEmailValidationError).should('be.visible');
     cy.get(rElements.rEmailValidationError).should('include.text',"Email or phone number is required.")
     cy.get(rElements.rPasswordValidationError).should('include.text',"Password cannot be blank.")
     cy.get(rElements.rConfirmPasswordValidationError).should('include.text',"Password confirmation cannot be blank.")
     cy.get(rElements.rTermsConditionsValidationError).should('include.text',"You have to accept our Terms and Conditions.")
+    cy.get(rElements.rSecretQuestionValidationError).should('include.text',"Secret question cannot be blank")
+    cy.get(rElements.rLoginValidationError).should('include.text',"Login cannot be blank.")
+    // adding invalid email
+    cy.get(rElements.rEmailInput).type('invalid.email@com')
+    // adding non matching passwords
+    cy.get(rElements.rPassInput).type('Nico@6571')
+    cy.get(rElements.rRePassInput).type('Nico#6571')
+    // addoing already registered login
+    cy.get(rElements.rLoginInput).type(Cypress.config('ValidUser'))
+    // selecting secret question but leaving unanswered 
+
+    cy.get(rElements.rRegisterBtn).click()
+    cy.get(rElements.rEmailValidationError).should('include.text',"Invalid email.")
+    cy.get(rElements.rConfirmPasswordValidationError).should('include.text','Password must be strictly repeated.')
+
   })
   
-  it('Login', () => {
+  it.only('Login then logout', () => {
     // We will just validate that link is correct
     Header.SignUp()
     cy.get(hElements.hSignInModalSignInBtn).click({force: true})
     cy.url().should('eq', 'https://demo.casino/user/login')
+    cy.get(lElements.lLoginInput).type(Cypress.config('ValidUser'))
+    cy.get(lElements.lPasswordInput).type(Cypress.config('ValidUserPass'))
+    cy.get(lElements.lSubmitBtn).click()
+    cy.get(mBElements.mBProfile).last().click()
+    // Validate Username is correct
+    cy.get(pElements.pProfileName).should('include.text', Cypress.config('ValidUser'))
+    // Logout
+    cy.get(pElements.pLogOut).click()
+
   })
 
 })

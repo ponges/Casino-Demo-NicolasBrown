@@ -45,5 +45,9 @@ export default {
     // Error in confirm password Validation text
     rConfirmPasswordValidationError: '[data-test="error-password_confirmation"]',
     // Error in accept terms checkbox text
-    rTermsConditionsValidationError: '[data-test="error-terms_and_conditions"]'
+    rTermsConditionsValidationError: '[data-test="error-terms_and_conditions"]',
+    // Error in secret question text
+    rSecretQuestionValidationError: '[data-test="error-secret_question"]',
+    // Error in login validation text
+    rLoginValidationError: '[data-test="error-username"]'
   };
